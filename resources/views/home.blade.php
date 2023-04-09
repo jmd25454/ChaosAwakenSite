@@ -9,6 +9,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/minecraftia" type="text/css" />
 
     <!-- Styles -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -20,29 +21,36 @@
 
 <body>
     <x-side-bar />
-    <div class='max-w-7xl mx-auto sm:px-6 lg:px-8 flex flex-wrap gap-4 after:basis-1/4 after:grow after:shrink before:basis-1/4 before:grow before:shrink after:order-last before:order-last'>
-        @switch($id)
-            @case(1)
-                <x-home-board />
-            @break
+    @switch($id)
+        @case(1)
+            <x-home-board />
+        @break
 
-            @case(2)
-                <x-about-board />
-            @break
+        @case(2)
+            <x-about-board />
+        @break
 
-            @case(3)
-                <x-downloads-board />
-            @break
+        @case(3)
+            <div
+                class='max-w-7xl mx-auto sm:px-6 lg:px-8 flex flex-wrap gap-4 after:basis-1/4 after:grow after:shrink before:basis-1/4 before:grow before:shrink after:order-last before:order-last justify-between'>
+                @foreach ($downloads as $key => $download)
+                    <x-downloads-board link="{{ $download['link'] }}" version="{{ $download['version'] }}"
+                        description="{{ $download['description'] }}" key="{{ $key }}" />
+                @endforeach
+            </div>
+        @break
 
-            @case(4)
+        @case(4)
+            <div
+                class='max-w-7xl mx-auto sm:px-6 lg:px-8 flex flex-wrap gap-4 after:basis-1/4 after:grow after:shrink before:basis-1/4 before:grow before:shrink after:order-last before:order-last'>
                 @foreach ($mobs as $mob)
                     <x-gallery-board life="{{ $mob->life }}" text="{{ $mob->text }}" name="{{ $mob->name }}"
                         image="{{ $mob->image }}" />
                 @endforeach
-            @break
+            </div>
+        @break
 
-        @endswitch
-    </div>
+    @endswitch
 </body>
 
 </html>
